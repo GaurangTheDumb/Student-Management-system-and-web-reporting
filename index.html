@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Student Management &amp; Web Reporting</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <h1>Student Register</h1>
+  <div class="actions">
+    <button id="seedBtn" class="btn ghost">Load demo data</button>
+    <button id="resetBtn" class="btn ghost danger">Erase all data</button>
+  </div>
+</header>
+
+<nav id="tabs" aria-label="Sections">
+  <button data-tab="dash" class="active">Dashboard</button>
+  <button data-tab="students">Students</button>
+  <button data-tab="marks">Marks</button>
+  <button data-tab="attendance">Attendance</button>
+  <button data-tab="assignments">Assignments</button>
+  <button data-tab="report">Report cards</button>
+</nav>
+
+<main>
+  <!-- DASHBOARD -->
+  <section id="dash" class="tab active">
+    <div class="kpis" id="kpis"></div>
+    <div class="grid">
+      <div class="panel"><h2>Average score by subject</h2><canvas id="chSubjects" width="520" height="260"></canvas></div>
+      <div class="panel"><h2>Grade distribution</h2><canvas id="chGrades" width="520" height="260"></canvas></div>
+      <div class="panel"><h2>Attendance by student</h2><canvas id="chAttendance" width="520" height="260"></canvas></div>
+      <div class="panel"><h2>Class ranking</h2><ol id="ranking" class="ranking"></ol></div>
+    </div>
+  </section>
+
+  <!-- STUDENTS -->
+  <section id="students" class="tab">
+    <form id="studentForm" class="panel form">
+      <h2>Add a student</h2>
+      <input name="name" placeholder="Full name" required>
+      <input name="roll" placeholder="Roll / enrollment no." required>
+      <input name="cls" placeholder="Class or section" required>
+      <input name="email" type="email" placeholder="Email (optional)">
+      <button class="btn">Add student</button>
+    </form>
+    <div class="panel"><h2>All students</h2><div id="studentTable" class="scroll"></div></div>
+  </section>
+
+  <!-- MARKS -->
+  <section id="marks" class="tab">
+    <form id="markForm" class="panel form">
+      <h2>Record marks</h2>
+      <select name="sid" class="studentSel" required></select>
+      <select name="subject" id="subjectSel" required></select>
+      <input name="score" type="number" min="0" step="0.5" placeholder="Marks obtained" required>
+      <input name="max" type="number" min="1" value="100" placeholder="Out of" required>
+      <button class="btn">Save marks</button>
+    </form>
+    <div class="panel"><h2>Marks entered</h2><div id="markTable" class="scroll"></div></div>
+  </section>
+
+  <!-- ATTENDANCE -->
+  <section id="attendance" class="tab">
+    <form id="attForm" class="panel form">
+      <h2>Mark attendance</h2>
+      <select name="sid" class="studentSel" required></select>
+      <input name="date" type="date" required>
+      <select name="status"><option>Present</option><option>Late</option><option>Absent</option></select>
+      <button class="btn">Save attendance</button>
+    </form>
+    <div class="panel"><h2>Attendance summary</h2><div id="attTable" class="scroll"></div></div>
+  </section>
+
+  <!-- ASSIGNMENTS -->
+  <section id="assignments" class="tab">
+    <form id="asnForm" class="panel form">
+      <h2>Track an assignment</h2>
+      <select name="sid" class="studentSel" required></select>
+      <input name="title" placeholder="Assignment title" required>
+      <select name="status"><option>Submitted</option><option>Late</option><option>Pending</option></select>
+      <button class="btn">Save assignment</button>
+    </form>
+    <div class="panel"><h2>Assignments</h2><div id="asnTable" class="scroll"></div></div>
+  </section>
+
+  <!-- REPORT CARDS -->
+  <section id="report" class="tab">
+    <form id="repForm" class="panel form">
+      <h2>Generate a report card</h2>
+      <select name="sid" class="studentSel" required></select>
+      <select name="tpl">
+        <option value="classic">Classic template</option>
+        <option value="modern">Modern template</option>
+        <option value="minimal">Minimal template</option>
+      </select>
+      <input name="inst" placeholder="Institute name" value="Your Institute Name">
+      <textarea name="remarks" rows="3" placeholder="Teacher's remarks (leave blank for an automatic remark)"></textarea>
+      <button class="btn">Generate report card</button>
+    </form>
+    <div class="panel">
+      <div class="row"><h2>Preview</h2>
+        <span><button id="printBtn" class="btn ghost" disabled>Print</button>
+        <button id="dlBtn" class="btn ghost" disabled>Download HTML</button></span></div>
+      <iframe id="preview" title="Report card preview"></iframe>
+    </div>
+  </section>
+</main>
+
+<div id="toast" role="status"></div>
+<script src="script.js"></script>
+</body>
+</html>
